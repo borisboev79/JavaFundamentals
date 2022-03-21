@@ -2,7 +2,7 @@ package Exercise1;
 
 import java.util.Scanner;
 
-public class E03Vacation {
+public class E103Vacation {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int groupSize = Integer.parseInt(scanner.nextLine());
