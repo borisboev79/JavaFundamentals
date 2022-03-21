@@ -2,7 +2,7 @@ package Exercise1;
 
 import java.util.Scanner;
 
-public class E05Login {
+public class E105Login {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
