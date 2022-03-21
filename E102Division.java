@@ -1,7 +1,7 @@
 package Exercise1;
 import java.util.Scanner;
 
-public class E02Division {
+public class E102Division {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int number = scanner.nextInt();
