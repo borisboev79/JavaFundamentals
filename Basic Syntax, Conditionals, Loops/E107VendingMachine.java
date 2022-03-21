@@ -2,7 +2,7 @@ package Exercise1;
 
 import java.util.Scanner;
 
-public class E07VendingMachine {
+public class E107VendingMachine {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
