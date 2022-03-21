@@ -2,7 +2,7 @@ package Exercise1;
 
 import java.util.Scanner;
 
-public class E06StrongNumbers {
+public class E106StrongNumbers {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
