@@ -1,7 +1,7 @@
 package Exercise1;
 import java.util.Scanner;
 
-public class E10PadawanEquipment {
+public class E110PadawanEquipment {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         double money = Double.parseDouble(scanner.nextLine());
