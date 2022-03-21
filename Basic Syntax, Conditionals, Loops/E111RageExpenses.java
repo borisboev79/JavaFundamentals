@@ -1,6 +1,6 @@
 package Exercise1;
 import java.util.Scanner;
-public class E11RageExpenses {
+public class E111RageExpenses {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int lostGames = Integer.parseInt(scanner.nextLine());
