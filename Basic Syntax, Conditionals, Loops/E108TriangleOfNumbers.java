@@ -1,6 +1,6 @@
 package Exercise1;
 import java.util.Scanner;
-public class E08TriangleOfNumbers {
+public class E108TriangleOfNumbers {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int number = scanner.nextInt();
