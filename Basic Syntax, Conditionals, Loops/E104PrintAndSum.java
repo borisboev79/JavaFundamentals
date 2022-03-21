@@ -1,7 +1,7 @@
 package Exercise1;
 import java.util.Scanner;
 
-public class E04PrintAndSum {
+public class E104PrintAndSum {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int firtsNumber = scanner.nextInt();
