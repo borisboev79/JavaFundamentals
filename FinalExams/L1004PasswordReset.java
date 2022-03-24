@@ -6,15 +6,17 @@ import java.util.Scanner;
 public class L1004PasswordReset {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        StringBuilder password = new StringBuilder();
+      //  String input = scanner.nextLine();
+        StringBuilder password = new StringBuilder(scanner.nextLine());
         String command = scanner.nextLine();
         while (!command.equals("Done")) {
 
             if (command.contains("TakeOdd")) {
-                System.out.println(handleTakeOdd(input, password));
+              System.out.println(handleTakeOdd(password));
+
             } else if (command.contains("Cut")) {
                 System.out.println(handleCut(command, password));
+
             } else if (command.contains("Substitute")) {
                 handleSubstitute(command, password);
             }
@@ -23,12 +25,18 @@ public class L1004PasswordReset {
         System.out.println("Your password is: " + password);
     }
 
-    private static StringBuilder handleTakeOdd(String input, StringBuilder password) {
-        for (int i = 0; i < input.length(); i++) {
+    private static StringBuilder handleTakeOdd(StringBuilder password) {
+
+       StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < password.length(); i++) {
             if (i % 2 != 0) {
-                password.append(input.charAt(i));
+                sb.append(password.charAt(i));
+
             }
+
         }
+        password.setLength(0);
+        password.append(sb);
         return password;
     }
 
@@ -37,7 +45,7 @@ public class L1004PasswordReset {
         int index = Integer.parseInt(data[1]);
         int length = Integer.parseInt(data[2]);
         String tempPass = password.toString();
-  
+
         String substringToCut = tempPass.substring(index, index +  length);
         String tempPass2 = tempPass.replaceFirst(substringToCut, "");
         password.setLength(0);
