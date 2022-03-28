@@ -1,6 +1,6 @@
 package Lab10_FinalExamPreparation;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,38 +11,40 @@ public class E1013EmojiDetector {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        Pattern pattern = Pattern.compile("([:*]{2})(?<smiley>[A-Z][a-z]{2,})\\1");
+        Pattern pattern = Pattern.compile("([:]{2}|[*]{2})(?<smiley>[A-Z][a-z]{2,})\\1");
         Matcher matcher = pattern.matcher(input);
-        long coolThreshold = 1;
+        BigDecimal coolThreshold = new BigDecimal(1);
+        BigDecimal coolMeter = new BigDecimal(0);
         List<String> smileys = new LinkedList<>();
-        List<String> coolness = new ArrayList<>();
-        List<String> results = new LinkedList<>();
-        while (matcher.find()) {
-            smileys.add(matcher.group());
-            coolness.add(matcher.group("smiley"));
-        }
+        int counter = 0;
+
         Pattern digits = Pattern.compile("\\d");
         Matcher digitMatcher = digits.matcher(input);
 
         while (digitMatcher.find()) {
-            coolThreshold *= Integer.parseInt(digitMatcher.group());
+
+            int number = Integer.parseInt(digitMatcher.group());
+            coolThreshold = coolThreshold.multiply(BigDecimal.valueOf(number));
         }
-        for (int i = 0; i < coolness.size(); i++) {
-            int coolMeter = 0;
-            for (int j = 0; j < coolness.get(i).length(); j++) {
-                coolMeter += coolness.get(i).charAt(j);
+        while (matcher.find()) {
+            counter++;
+            String word = matcher.group();
+            for (int i = 0; i < word.length(); i++) {
+                if (Character.isLetter(word.charAt(i))) {
+                    int num = word.charAt(i);
+                    coolMeter = coolMeter.add(BigDecimal.valueOf(num));
+                }
             }
-            if (coolMeter >= coolThreshold) {
-                results.add(coolness.get(i));
+            if (coolMeter.compareTo(coolThreshold) == 0 || coolMeter.compareTo(coolThreshold) == 1) {
+                smileys.add(matcher.group());
+
             }
+            coolMeter = BigDecimal.valueOf(0);
         }
         System.out.println("Cool threshold: " + coolThreshold);
-        System.out.printf("%d emojis found in the text. The cool ones are:%n", smileys.size());
+        System.out.printf("%d emojis found in the text. The cool ones are:%n", counter);
+        smileys.forEach(System.out::println);
 
-        for (int i = 0; i < results.size(); i++) {
-            if (smileys.get(i).contains(results.get(i))) {
-                System.out.println(smileys.get(i));
-            }
-        }
     }
 }
+
