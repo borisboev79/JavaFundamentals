@@ -14,7 +14,11 @@ public class E1015PlantDiscovery {
             String[] data = scanner.nextLine().split("<->");
             String name = data[0];
             int plantRarity = Integer.parseInt(data[1]);
-            plant.putIfAbsent(name, new Plant(name, plantRarity, 0.0));
+            if(plant.containsKey(name)){
+                plant.get(name).setRarity(plantRarity);
+            }else {
+                plant.put(name, new Plant(name, plantRarity, 0.0));
+            }
             ratings.putIfAbsent(name, new LinkedList<>());
 
         }
@@ -30,11 +34,14 @@ public class E1015PlantDiscovery {
                     handleUpdate(plant, commands[1], Integer.parseInt(commands[2]));
                     break;
                 case "Reset":
-                    handleReset(plant, commands[1]);
+                    handleReset(plant, ratings, commands[1]);
                     break;
             }
             line = scanner.nextLine();
         }
+
+
+
 
         System.out.println("Plants for the exhibition:");
         plant.values().forEach(System.out::println);
@@ -43,7 +50,7 @@ public class E1015PlantDiscovery {
     private static void handleRate(Map<String, Plant> plant, Map<String, List<Double>> ratings, String name, double rating) {
         if (ratings.containsKey(name)) {
             ratings.get(name).add(rating);
-            double average = ratings.get(name).stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+            double average = ratings.get(name).stream().mapToDouble(d -> d).average().getAsDouble();
             plant.get(name).setRating(average);
         }else{
             System.out.println("error");
@@ -59,9 +66,12 @@ public class E1015PlantDiscovery {
 
     }
 
-    private static void handleReset(Map<String, Plant> plant, String name) {
+    private static void handleReset(Map<String, Plant> plant, Map<String, List<Double>> ratings, String name) {
         if(plant.containsKey(name)) {
             plant.get(name).setRating(0);
+
+            ratings.get(name).removeAll(ratings.get(name));
+
         }else{
             System.out.println("error");
         }
