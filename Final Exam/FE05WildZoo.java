@@ -1,40 +1,59 @@
 package FinalExam;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FE05WildZoo {
     public static void main(String[] args) {
-        //NOT SOLVED YET!!
+
         Scanner scanner = new Scanner(System.in);
         Map<String, Animal> animals = new LinkedHashMap<>();
+
         String input = scanner.nextLine();
         while (!input.equals("EndDay")) {
-            String[] data = input.split("-");
+            String[] data = input.split("[\\s+-]");
             String command = data[0];
             switch (command) {
                 case "Add:":
                     handleAdd(animals, data[1], Integer.parseInt(data[2]), data[3]);
+
                     break;
                 case "Feed:":
-                    handleFeed(animals, data[1], Integer.parseInt(data[2]));
+                    if (animals.get(data[1]) == null) {
+                        break;
+                    } else {
+                        handleFeed(animals, data[1], Integer.parseInt(data[2]));
+                    }
                     break;
             }
 
 
             input = scanner.nextLine();
         }
-        System.out.println("Animals:");
-        animals.forEach(System.out::printf);
 
+        System.out.println("Animals:");
+        animals.values().forEach(System.out::println);
+        System.out.println("Areas with hungry animals:");
+        Map<String, Integer> zones = new LinkedHashMap<>();
+
+        animals.entrySet().forEach(result -> {
+
+            if (animals.get(result.getValue().getName()) != null) {
+
+                if (zones.containsKey(result.getValue().getArea())) {
+                    zones.put(result.getValue().getArea(), zones.get(result.getValue().getArea()) + 1);
+                }
+                zones.putIfAbsent(result.getValue().getArea(), 1);
+            }
+        });
+        zones.forEach((k, v) -> System.out.printf("%s: %d%n", k, v));
     }
 
     private static void handleFeed(Map<String, Animal> animals, String name, int food) {
-
         animals.get(name).setFood(animals.get(name).getFood() - food);
-        if(animals.get(name).getFood() <= 0){
-            System.out.printf("%s was successfully fed", name);
+
+        if (animals.get(name).getFood() <= 0) {
+            System.out.printf("%s was successfully fed%n", name);
             animals.remove(name);
         }
     }
@@ -44,7 +63,6 @@ public class FE05WildZoo {
         animals.get(name).setName(name);
         animals.get(name).setFood(animals.get(name).getFood() + food);
         animals.get(name).setArea(area);
-
     }
 
     static class Animal {
@@ -60,7 +78,7 @@ public class FE05WildZoo {
 
         @Override
         public String toString() {
-            return String.format("%s -> %dg", this.name, this.food);
+            return String.format(" %s -> %dg", this.name, this.food);
         }
 
         public String getName() {
