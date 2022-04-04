@@ -1,7 +1,6 @@
 package FinalExam;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class FE05WildZoo {
     public static void main(String[] args) {
@@ -16,7 +15,6 @@ public class FE05WildZoo {
             switch (command) {
                 case "Add:":
                     handleAdd(animals, data[1], Integer.parseInt(data[2]), data[3]);
-
                     break;
                 case "Feed:":
                     if (animals.get(data[1]) == null) {
@@ -26,8 +24,6 @@ public class FE05WildZoo {
                     }
                     break;
             }
-
-
             input = scanner.nextLine();
         }
 
